@@ -13,7 +13,7 @@ class AppTest {
     args(0) = "Environment=production,RegisterInControl=false,TestPlanMode=true"
       
     val huemulBigDataGov = new huemul_BigDataGovernance("Generador de Codigo",args,globalSettings.Global)
-    val Control = new huemul_Control(huemulBigDataGov,null)
+    val Control = new huemul_Control(huemulBigDataGov,null,  huemulType_Frequency.ANY_MOMENT)
 
     @Test
     def testOK() = assertTrue(GeneraCod)
@@ -26,7 +26,7 @@ class AppTest {
                                   , "tbl_yourapplication_entidad_mes"//NewTableName
                                   
                                   , huemulType_Tables.Transaction //TableType
-                                  , true //EsMes
+                                  ,  huemulType_Frequency.MONTHLY //EsMes
                                   , false //AutoMapping)
                                   )                    
        return true

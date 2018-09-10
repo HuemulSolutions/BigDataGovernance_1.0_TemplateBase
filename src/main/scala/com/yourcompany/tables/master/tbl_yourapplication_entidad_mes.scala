@@ -22,6 +22,9 @@ class tbl_yourapplication_entidad_mes(huemulBigDataGov: huemul_BigDataGovernance
   this.setLocalPath("yourapplication/")
     //columna de particion
   this.setPartitionField("periodo_mes")
+  //Frecuencia de actualización de los datos
+  this.setFrequency(huemulType_Frequency.MONTHLY)
+   
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI
   this.setDescription("[[LLENAR ESTE CAMPO]]")

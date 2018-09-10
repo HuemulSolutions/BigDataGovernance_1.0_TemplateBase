@@ -6,6 +6,7 @@ import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.datalake._
 import com.huemulsolutions.bigdata.tables._
 import org.apache.spark.sql.types._
+import com.huemulsolutions.bigdata.control.huemulType_Frequency._
 
 //ESTE CODIGO FUE GENERADO A PARTIR DEL TEMPLATE DEL SITIO WEB
 
@@ -15,9 +16,9 @@ import org.apache.spark.sql.types._
  * ejemplo de nombre: raw_institucion_mes
  */
 class raw_entidad_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Control) extends huemul_DataLake(huemulBigDataGov, Control) with Serializable  {
-   this.LogicalName = "[[yourapplication]]_[[entidad]]_[[per]]"
    this.Description = "Decripción de la interfaz"
    this.GroupName = "[[yourapplication]]"
+   this.setFrequency(huemulType_Frequency.MONTHLY)
    
    //Crea variable para configuración de lectura del archivo
    val CurrentSetting = new huemul_DataLakeSetting(huemulBigDataGov)
@@ -65,10 +66,10 @@ class raw_entidad_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemu
   */
   def open(Alias: String, ControlParent: huemul_Control, ano: Integer, mes: Integer, dia: Integer, hora: Integer, min: Integer, seg: Integer): Boolean = {
     //Crea registro de control de procesos
-     val control = new huemul_Control(huemulBigDataGov, ControlParent)
+     val control = new huemul_Control(huemulBigDataGov, ControlParent, huemulType_Frequency.ANY_MOMENT)
     //Guarda los parámetros importantes en el control de procesos
-    control.AddParamInfo("Ano", ano.toString())
-    control.AddParamInfo("Mes", mes.toString())
+    control.AddParamYear("Ano", ano)
+    control.AddParamMonth("Mes", mes)
        
     try { 
       //NewStep va registrando los pasos de este proceso, también sirve como documentación del mismo.
@@ -125,7 +126,7 @@ object raw_entidad_mes_test {
     //Creación API
     val huemulBigDataGov  = new huemul_BigDataGovernance(s"Testing DataLake - ${this.getClass.getSimpleName}", args, Global)
     //Creación del objeto control, por default no permite ejecuciones en paralelo del mismo objeto (corre en modo SINGLETON)
-    val Control = new huemul_Control(huemulBigDataGov, null)
+    val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.MONTHLY )
     
     /*************** PARAMETROS **********************/
     var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parámetro año, ej: ano=2017").toInt
