@@ -142,6 +142,7 @@ object raw_entidad_mes_test {
       DF_RAW.DataFramehuemul.DataFrame.show()
       
     Control.FinishProcessOK
+    huemulBigDataGov.close()
    
   }  
 }
