@@ -11,11 +11,36 @@ object globalSettings {
    
    Global.ImpalaEnabled = false
    
-   Global.POSTGRE_Setting.append(new huemul_KeyValuePath("production","jdbc:postgresql://{{000.000.000.000}}:5432/{{database_name}}?user={{user_name}}&password={{password}}&currentSchema=public"))
-   Global.POSTGRE_Setting.append(new huemul_KeyValuePath("experimental","jdbc:postgresql://{{000.000.000.000}}:5432/{{database_name}}?user={{user_name}}&password={{password}}&currentSchema=public"))
+   Global.CONTROL_Setting.append(new huemul_KeyValuePath("production","jdbc:postgresql://{{000.000.000.000}}:5432/{{database_name}}?user={{user_name}}&password={{password}}&currentSchema=public"))
+   Global.CONTROL_Setting.append(new huemul_KeyValuePath("experimental","jdbc:postgresql://{{000.000.000.000}}:5432/{{database_name}}?user={{user_name}}&password={{password}}&currentSchema=public"))
    
    Global.IMPALA_Setting.append(new huemul_KeyValuePath("production","jdbc:impala://{{000.000.000.000}}:21050/default"))
    Global.IMPALA_Setting.append(new huemul_KeyValuePath("experimental","jdbc:impala://{{000.000.000.000}}:21050/default"))
+   
+   /**
+    *NEW FROM 2.0 
+    */
+   
+   //BACKUP
+   Global.MDM_SaveBackup = true
+   Global.MDM_Backup_Path.append(new huemul_KeyValuePath("production","hdfs:///user/data/production/backup/"))
+   Global.MDM_Backup_Path.append(new huemul_KeyValuePath("experimental","hdfs://hdfs:///user/data/experimental/backup/"))
+      
+   //DATA QUALITY PATH & DATABASE
+   Global.DQ_SaveErrorDetails = true
+   Global.DQError_DataBase.append(new huemul_KeyValuePath("production","production_master"))   
+   Global.DQError_DataBase.append(new huemul_KeyValuePath("experimental","experimental_master"))
+   
+   Global.DQError_Path.append(new huemul_KeyValuePath("production","hdfs:///user/data/production/dq/"))
+   Global.DQError_Path.append(new huemul_KeyValuePath("experimental","hdfs://hdfs:///user/data/experimental/dq/"))
+   
+   //DATA QUALITY PATH & DATABASE
+   Global.MDM_SaveOldValueTrace = true
+   Global.MDM_OldValueTrace_DataBase.append(new huemul_KeyValuePath("production","production_oldvalue"))   
+   Global.MDM_OldValueTrace_DataBase.append(new huemul_KeyValuePath("experimental","experimental_oldvalue"))
+   
+   Global.MDM_OldValueTrace_Path.append(new huemul_KeyValuePath("production","hdfs:///user/data/production/oldvalue/"))
+   Global.MDM_OldValueTrace_Path.append(new huemul_KeyValuePath("experimental","hdfs://hdfs:///user/data/experimental/oldvalue/"))
    
    
    //TEMPORAL SETTING

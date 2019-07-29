@@ -40,9 +40,9 @@ object process_entidad_mes {
       println(s"Procesando Año $param_ano, Mes $param_mes ($i de $param_numMeses)")
       
       //Ejecuta codigo
-      var FinOK = process_master(huemulBigDataGov, null, param_ano, param_mes)
+      var finControl = process_master(huemulBigDataGov, null, param_ano, param_mes)
       
-      if (FinOK)
+      if (finControl.Control_Error.IsOK())
         i+=1
       else {
         println(s"ERROR Procesando Año $param_ano, Mes $param_mes ($i de $param_numMeses)")
@@ -61,7 +61,7 @@ object process_entidad_mes {
     param_ano: año de los datos  <br>
     param_mes: mes de los datos  <br>
    */
-  def process_master(huemulBigDataGov: huemul_BigDataGovernance, ControlParent: huemul_Control, param_ano: Integer, param_mes: Integer): Boolean = {
+  def process_master(huemulBigDataGov: huemul_BigDataGovernance, ControlParent: huemul_Control, param_ano: Integer, param_mes: Integer): huemul_Control = {
     val Control = new huemul_Control(huemulBigDataGov, ControlParent,  huemulType_Frequency.MONTHLY)    
     
     try {             
@@ -107,11 +107,11 @@ object process_entidad_mes {
       huemulTable.cantidad.SetMapping("cantidad")
       huemulTable.precio.SetMapping("precio")
 
-      
+      // huemulTable.setApplyDistinct(false) //deshabilitar si DF tiene datos únicos, por default está habilitado      
       
       Control.NewStep("Ejecuta Proceso")    
       if (!huemulTable.executeFull("FinalSaved"))
-        Control.RaiseError(s"User: Error al intentar masterizar instituciones (${huemulTable.Error_Code}): ${huemulTable.Error_Text}")
+        Control.RaiseError(s"User: Error al intentar masterizar los datos (${huemulTable.Error_Code}): ${huemulTable.Error_Text}")
       
       Control.FinishProcessOK
     } catch {
@@ -121,30 +121,8 @@ object process_entidad_mes {
       }
     }
     
-    return Control.Control_Error.IsOK()   
+    return Control   
   }
   
 }
 
-/**
-* Objeto permite mover archivos HDFS desde ambiente origen (ejemplo producción) a ambientes destino (ejemplo ambiente experimental)
-*/
-object process_entidad_mes_Migrar {
- 
- def main(args : Array[String]) {
-   //Creacion API
-    val huemulBigDataGov  = new huemul_BigDataGovernance(s"Migración de datos tabla tbl_yourapplication_entidad_mes  - ${this.getClass.getSimpleName}", args, globalSettings.Global)
-    
-    /*************** PARAMETROS **********************/
-    var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parametro año, ej: ano=2017").toInt
-    var param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parametro mes, ej: mes=12").toInt
-    var param_dia = 1
-   
-    var param = huemulBigDataGov.ReplaceWithParams("{{YYYY}}-{{MM}}-{{DD}}", param_ano, param_mes, param_dia, 0, 0, 0)
-    
-   val clase = new tbl_yourapplication_entidad_mes(huemulBigDataGov, null)
-   clase.CopyToDest(param, "[[environment]]")
-   
- }
- 
-}

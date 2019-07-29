@@ -3,7 +3,7 @@
   <groupId>com.yourcompany</groupId>
   <artifactId>yourapplication</artifactId>
   <version>1.0</version>
-  <name>BigDataGovernance-1.0-Template</name>
+  <name>BigDataGovernance-Template</name>
   <description>Proyecto base para ser utilizado en cualquier proyecto BigData</description>
   <inceptionYear>2018</inceptionYear>
   <licenses>
@@ -28,7 +28,7 @@
   	<dependency>
     	<groupId>com.huemulsolutions.bigdata</groupId>
     	<artifactId>huemul-bigdatagovernance</artifactId>
-    	<version>1.0</version>
+    	<version>2.0</version>
     </dependency>
     
     <dependency>
