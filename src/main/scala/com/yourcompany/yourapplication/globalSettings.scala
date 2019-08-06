@@ -33,7 +33,7 @@ object globalSettings {
    Global.DQError_Path.append(new huemul_KeyValuePath("production","hdfs:///user/data/production/dq/"))
    Global.DQError_Path.append(new huemul_KeyValuePath("experimental","hdfs://hdfs:///user/data/experimental/dq/"))
    
-   //DATA QUALITY PATH & DATABASE
+   //MDM OLD VALUE TRACE PATH & DATABASE
    Global.MDM_SaveOldValueTrace = true
    Global.MDM_OldValueTrace_DataBase.append(new huemul_KeyValuePath("production","production_oldvalue"))   
    Global.MDM_OldValueTrace_DataBase.append(new huemul_KeyValuePath("experimental","experimental_oldvalue"))
